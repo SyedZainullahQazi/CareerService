@@ -1,47 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+import 'font-awesome/css/font-awesome.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 
-function App() {
-  const [countries, setCountries] = useState([]);
-  const [loading, setLoading] = useState(true);
+import { AuthProvider } from './contexts/authContext/AuthContext';
+import Dashboard from './pages/general/Dashboard';
 
-  useEffect(() => {
-    const apiUrl = 'http://localhost:5000/';
+import AdminProtectedRoute from './components/AdminProtectedRoute/AdminProtectedRoute';
+import GeneralProtectedRoute from './components/GeneralProtectedRoute/GeneralProtectedRoute';
+import Signup from './pages/auth/UserAccess/Signup';
 
-    axios
-      .get(apiUrl)
-      .then((response) => {
-        if (Array.isArray(response.data.countries)) {
-          setCountries(response.data.countries);
-        } else {
-          console.error('API response does not contain countries:', response.data);
-        }
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-        setLoading(false);
-      });
-  }, []);
-
+const App = () => {
   return (
-    <div>
-      <h1>Hello World</h1>
-      <h2>Country Data:</h2>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <ul>
-          {countries.length === 0 ? (
-            <p>No data available</p>
-          ) : (
-            countries.map((country, index) => (
-              <li key={index}>{country}</li>
-            ))
-          )}
-        </ul>
-      )}
-    </div>
+    <AuthProvider>
+      <Routes>
+        <Route path="/" element={<Signup />} />
+        <Route path="/dashboard" element={<GeneralProtectedRoute elementBody={<Dashboard />} />} />
+        <Route path="/henlo" element={<><h1>Hello World</h1></>} />
+      </Routes>
+    </AuthProvider>
   );
 }
 
