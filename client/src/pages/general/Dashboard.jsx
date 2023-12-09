@@ -1,27 +1,34 @@
-import React,{useEffect,useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../contexts/authContext/AuthContext';
 import Navbar from '../../components/Navbar/Navbar'; // Update the path as needed
 import Cookies from "js-cookie";
 
 import GETUSER_API from "../../apis/generals/GetUser_API";
+import TopBar from '../../components/shared/TopBar';
+import LeftSideBar from '../../components/shared/LeftSideBar';
+
+import DBStyle from "../../styles/Dashboard.module.css"
 
 const Dashboard = () => {
   const { logout } = useAuth();
-  const [userData,setUseData]=useState(null);
+  const [userData, setUseData] = useState(null);
 
   return (
-    <div className="dashboard-container">
+    <div >
+      <div >
+        <TopBar />
+      </div>
+
       <div>
-        <Navbar />
+        <div>
+          <LeftSideBar />
+        </div>
+
+        <div className={DBStyle.dashboard}>
+          <p>Main Content</p>
+        </div>
       </div>
-      <div className="content">
-        <button className="signout-button" onClick={logout}>
-          Signout
-        </button>
-        <h1 className="dashboard-title">Hello, User</h1>
-        <p>Welcome to your dashboard. Here's some content.</p>
-        {/* Other content goes here */}
-      </div>
+
     </div>
   );
 }

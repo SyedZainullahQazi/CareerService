@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 
 import Cookies from "js-cookie";
-import { useAuth } from "../../contexts/authContext/AuthContext";
 import GETUSER_API from "../../apis/generals/GetUser_API";
+import { useAuth } from "../../contexts/authContext/AuthContext";
 
 export function GeneralProtectedRoute({ elementBody: Component }) {
   const [userDetails, setUserDetails] = useState(null);

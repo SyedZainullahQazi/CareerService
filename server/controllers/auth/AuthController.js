@@ -33,7 +33,7 @@ const SignIn = async (req, res) => {
             res.status(500).json({ error: "An error occurred" });
         }
 
-        const NewUserToken=JWT.sign({email:GooglePayload.email},process.env.JWT_SECRET,{expiresIn:'1h'});
+        const NewUserToken=JWT.sign({email:GooglePayload.email},process.env.JWT_SECRET);
         res.status(200).json({token:NewUserToken});
     }
     else

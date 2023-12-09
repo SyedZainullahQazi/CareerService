@@ -1,9 +1,11 @@
 import React , {useState,useEffect} from 'react';
+import { NavLink } from 'react-router-dom';
 import { LazyLoadImage } from 'react-lazy-load-image-component'; // Import the LazyLoadImage component
 import '../../styles/Navbar.css';
 import GETUSER_API from '../../apis/generals/GetUser_API';
 import Cookies from 'js-cookie';
 import { useAuth } from '../../contexts/authContext/AuthContext';
+import NAVSTYLE from "../../styles/shared/navbar.module.css"
 
 const Navbar = () => {
   const [userData,setUseData]=useState(null);
@@ -29,9 +31,9 @@ const Navbar = () => {
       </div>
       <ul className="nav-links">
         <li>
-          <a href="#">
-            <i className="fa fa-tachometer"></i> Dashboard
-          </a>
+          <NavLink to="/dashboard" activeClassName={NAVSTYLE.active} exact>
+            <i className={NAVSTYLE.active} ></i> Dashboard
+          </NavLink>
         </li>
         <li>
           <a href="#">

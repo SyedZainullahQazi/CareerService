@@ -1,0 +1,35 @@
+.TopBar{
+    
+    background-color:#776B5D;
+    height:10vh;
+    margin-left:17vw;
+    padding-top:1.3vh;
+    color:white;
+    border-radius:0px 0px 20px 0px;
+}
+
+.ProfilePic{
+    border-radius: 100%;
+    margin-top:100;
+    margin-right:1vw;
+}
+.ProfileName{
+    margin-right:1vw;
+}
+.SignOut{
+    margin-right:2vw;
+    color:white;
+    text-decoration: none;
+}
+.Title{
+    margin-top:1vh;
+}
+
+.Link{
+    color:white;
+    margin-right:3vw;
+    text-decoration: none;
+}
+.LinkPadding{
+    padding-top:2vh;
+}
