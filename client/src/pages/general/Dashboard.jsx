@@ -1,35 +1,56 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../contexts/authContext/AuthContext';
-import Navbar from '../../components/Navbar/Navbar'; // Update the path as needed
 import Cookies from "js-cookie";
 
-import GETUSER_API from "../../apis/generals/GetUser_API";
-import TopBar from '../../components/shared/TopBar';
-import LeftSideBar from '../../components/shared/LeftSideBar';
+import Post from '../../components/shared/Post';
 
 import DBStyle from "../../styles/Dashboard.module.css"
+import Body from '../../components/Genral/Body';
+import GETEVENT_API from '../../apis/generals/GetAllEvent_API';
+
+const stripHtmlTags = (htmlString) => {
+  const doc = new DOMParser().parseFromString(htmlString, 'text/html');
+  return doc.body.textContent || '';
+};
 
 const Dashboard = () => {
-  const { logout } = useAuth();
-  const [userData, setUseData] = useState(null);
+  const [EventData, setEventData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const Events = await GETEVENT_API(Cookies.get("jwtToken"));
+        
+        const processedEvents = Events.map((event) => {
+          const truncatedText = stripHtmlTags(event.postDescription).slice(0, 50);
+          return { ...event, truncatedDescription: truncatedText }});
+
+        setEventData(processedEvents);
+      } catch (error) {
+        console.error("Error fetching Events:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
 
   return (
-    <div >
-      <div >
-        <TopBar />
-      </div>
-
+    <Body elementBody={() => <div className={DBStyle.dashboard}>
+      {EventData&&
       <div>
-        <div>
-          <LeftSideBar />
-        </div>
-
-        <div className={DBStyle.dashboard}>
-          <p>Main Content</p>
-        </div>
+        {EventData.map((event) => (
+          <Post 
+            title={event.postTitle} 
+            body={event.truncatedDescription} 
+            id={event._id} 
+            userId={event.postedBy.rollnum}
+            postType={event.postType}
+          />
+        ))}
       </div>
+    }
 
-    </div>
+    </div>} />
   );
 }
 

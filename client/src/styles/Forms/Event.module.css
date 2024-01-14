@@ -1,0 +1,46 @@
+.EventMain{
+    background-color:#776B5D; 
+color:white;
+margin-left:5vw;
+margin-top:0.5vw;
+border-radius: 25px;
+padding:3vw;
+width:65vw;
+height:auto;
+}
+
+.EventInputDiv{
+    width:50vw;
+    margin-bottom:1vw;
+}
+.EventTitle{
+    width:50vw;
+    margin-right:2vw;
+    margin-bottom:1vw;
+}
+.EventInputTextBox{
+    border-radius :1.5vw;
+    padding-top:0.7vw;
+    padding-bottom:0.7vw;
+}
+.EventImageInput{
+    border-radius :1.5vw;
+    padding-top:0.7vw;
+    padding-bottom:0.7vw;
+    width:50vw;
+}
+.EventDateTimeBoxLeft{
+    width:24vw;
+    margin-bottom:1vw;
+    margin-right:1vw;
+}
+.EventDateTimeBoxRight{
+    width:24vw;
+    margin-bottom:1vw;
+    margin-left:1vw;
+}
+
+.EventPost{
+    margin-top:1vh;
+    margin-bottom:7vh;
+}

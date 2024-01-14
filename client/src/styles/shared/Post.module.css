@@ -1,0 +1,31 @@
+.post_card{
+    padding:2vw;
+    margin-right:15vw;
+    margin-left:5vw;
+    border-radius:20px;
+    background-color:#F2F1EB;
+    margin-bottom: 7vh;
+    margin-top:1vh;
+
+    -moz-box-shadow: 0px 3px 8px rgb(100,100,100);
+    -webkit-box-shadow: 0px 3px 8px rgb(100,100,100);
+    box-shadow: 0px 3px 8px rgb(100,100,100);
+}
+.post_title{
+    font-weight: bold;
+    padding-left:0.5vw;
+}
+.post_body{
+    padding-left:0.5vw;
+}
+.post_body_left{
+    padding-left: 0.5vw;
+    font-weight: bold;
+}
+.post_body_right{
+    margin-right: 5vw;
+    font-weight: bold;
+}
+.post_body_middle{
+    font-weight: bold;
+}

@@ -34,31 +34,33 @@ function LeftSideBar() {
           </NavLink>
         </div>
 
-        <div className={`${LSB.Link}`}>
+        <div className={`${pathname.toLowerCase().includes("/scholarship")?LSB.active:LSB.Link}` }>
           <NavLink exact to="/scholarship" className={`${LSB.LinkInner}`}>
             <i className={`fa fa-graduation-cap ${LSB.navicon}`}></i> Scholarship
           </NavLink>
         </div>
 
-        <div className={`${LSB.Link}`}>
-          <NavLink to="/team" className={`${LSB.LinkInner}`}>
-            <i className={`fa fa-users ${LSB.navicon}`}></i> Our Team
-          </NavLink>
-        </div>
+        
 
-        <div className={`${LSB.Link}`}>
+        <div className={`${pathname.toLowerCase().includes("/sessions")?LSB.active:LSB.Link}` }>
           <NavLink to="/sessions" className={`${LSB.LinkInner}`}>
             <i className={`fa fa-calendar ${LSB.navicon}`}></i> Sessions
           </NavLink>
         </div>
 
-        <div className={`${LSB.Link}`}>
+        <div className={`${pathname.toLowerCase().includes("/team")?LSB.active:LSB.Link}` }>
+          <NavLink to="/team" className={`${LSB.LinkInner}`}>
+            <i className={`fa fa-users ${LSB.navicon}`}></i> Our Team
+          </NavLink>
+        </div>
+
+        <div className={`${pathname.toLowerCase().includes("/join-event")?LSB.active:LSB.Link}` }>
           <NavLink to="/join-event " className={`${LSB.LinkInner}`}>
             <i className={`fa fa-calendar-plus-o ${LSB.navicon}`}></i> Join Event
           </NavLink>
         </div>
 
-        <div className={`${LSB.Link}`}>
+        <div className={`${pathname.toLowerCase().includes("/profile")?LSB.active:LSB.Link}` }>
           <NavLink to="/profile" className={`${LSB.LinkInner}`}>
             <i className={`fa fa-user  ${LSB.navicon} ${LSB.usericon}`}></i> 
             Profile

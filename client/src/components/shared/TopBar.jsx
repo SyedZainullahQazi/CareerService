@@ -6,6 +6,7 @@ import { useAuth } from '../../contexts/authContext/AuthContext';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 import TB from "../../styles/shared/TopBar.module.css";
+import { NavLink } from 'react-router-dom';
 
 
 
@@ -48,9 +49,10 @@ function TopBar() {
       {
         userData?.usertype && userData?.usertype==="admin"?
         <div>
-           <a href="#" className={`${TB.Link}`}>
-            <i className={`fa fa-plus-circle ${TB.LinkPadding}`}></i> Create Scholarship
-          </a>
+           <NavLink to="/manage-events" className={`${TB.Link}`}>
+            <i className={`fa fa-plus-circle ${TB.LinkPadding}`}></i> Manage Scholarship
+          </NavLink>
+          
 
           <a href="#" className={`${TB.Link}`}>
             <i className="fa fa-plus-circle"></i> Create Session

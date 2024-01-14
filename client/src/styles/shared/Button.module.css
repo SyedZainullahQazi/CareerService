@@ -1,0 +1,14 @@
+.btn_background{
+    color:white;
+    background-color: black;
+    padding:1vw;
+    border: 0;
+    border-radius: 25px;
+}
+.btn_background:hover{
+    color:black;
+    background-color: white;
+    padding:1vw;
+    border: 0;
+    border-radius: 25px;
+}
