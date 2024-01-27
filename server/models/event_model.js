@@ -36,6 +36,9 @@ const eventSchema = new mongoose.Schema({
     type: Date,
     default: new Date(),
   },
+  updateDate:{
+    type: Date,
+  },
   coverImage: {
     type: String,
     required: true,
@@ -44,6 +47,11 @@ const eventSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User', // Reference to the User model
     required: true,
+  },
+  updateBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User', // Reference to the User model
+    required: false,
   },
 });
 

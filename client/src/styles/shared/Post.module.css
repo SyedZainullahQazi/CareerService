@@ -6,17 +6,24 @@
     background-color:#F2F1EB;
     margin-bottom: 7vh;
     margin-top:1vh;
+    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
 
+    color:black;
+    border-color: #776B5D;
+    border:3px solid #776B5D;
     -moz-box-shadow: 0px 3px 8px rgb(100,100,100);
     -webkit-box-shadow: 0px 3px 8px rgb(100,100,100);
     box-shadow: 0px 3px 8px rgb(100,100,100);
+}
+.post_card:hover{
+    transform: scale(1.1);
 }
 .post_title{
     font-weight: bold;
     padding-left:0.5vw;
 }
 .post_body{
-    padding-left:0.5vw;
+    padding-left:1.2vw;
 }
 .post_body_left{
     padding-left: 0.5vw;

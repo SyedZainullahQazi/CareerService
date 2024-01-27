@@ -1,0 +1,42 @@
+.crudStructure{
+    width:70vw;
+    height:10vh;
+    background-color:#F2F1EB; ;
+    color:white;
+    margin-left:3vw;
+    border-radius:3vw;
+    margin-bottom:2vh;
+    transition: transform 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    padding-top:0.2vh;
+    padding-left:0.5vw;
+    color:black;
+
+    -moz-box-shadow: 0px 3px 29px rgb(100,100,100);
+    -webkit-box-shadow: 0px 3px 29px rgb(100,100,100);
+    box-shadow: 0px 3px 20px rgb(100,100,100);
+}
+
+.crudStructure:hover{
+    transform: scale(1.1);
+}
+
+.profPic{
+    border-radius:4vw;
+    height:3.5vw;
+    width:3.5vw;
+    margin-left:0vw;
+    margin-top:1vh;
+}
+.name{
+    margin-top:2.5vh;
+    font-weight: bold;
+}
+
+.EventBtn{
+    border:0;
+    background-color:#F2F1EB; ;
+    margin-top:2.5vh;
+}
+.EventIcon:hover{
+    cursor:pointer;
+}

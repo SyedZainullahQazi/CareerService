@@ -2,8 +2,9 @@
     color:white;
     background-color: black;
     padding:1vw;
-    border: 0;
+    
     border-radius: 25px;
+    border:0
 }
 .btn_background:hover{
     color:black;
@@ -11,4 +12,5 @@
     padding:1vw;
     border: 0;
     border-radius: 25px;
+    border:1px solid black;
 }

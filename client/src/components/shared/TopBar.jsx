@@ -49,18 +49,13 @@ function TopBar() {
       {
         userData?.usertype && userData?.usertype==="admin"?
         <div>
-           <NavLink to="/manage-events" className={`${TB.Link}`}>
-            <i className={`fa fa-plus-circle ${TB.LinkPadding}`}></i> Manage Scholarship
+           <NavLink to="/event-options" className={`${TB.Link}`}>
+            <i className={`fa fa-plus-circle ${TB.LinkPadding}`}></i> Manage Events
           </NavLink>
-          
 
-          <a href="#" className={`${TB.Link}`}>
-            <i className="fa fa-plus-circle"></i> Create Session
-          </a>
-
-          <a href="#" className={`${TB.Link}`}>
+          <NavLink to="/member-management" className={`${TB.Link}`}>
             <i className="fa fa-envelope fa-request"></i> Team Management
-          </a>
+          </NavLink>
         </div>
         :
         <div className={`${TB.Title}`}>

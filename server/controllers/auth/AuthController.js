@@ -17,17 +17,19 @@ const SignIn = async (req, res) => {
         if(GooglePayload?.hd==="cfd.nu.edu.pk")
         {
         const user = await USER_MODEL.findOne({ email_id: GooglePayload.email});
-        let UserData={
-            email_id: GooglePayload.email,
-            name: GooglePayload.name,
-            batch: null,
-            profilepicture: GooglePayload.picture,
-            subscribe: false,
-            rollnum: null,
-            usertype: 'user',
-        };
-
+        const emailParts = GooglePayload.email.split('@')[0]; // Splitting email at '@' and taking the first part
         if(!user){
+            const Rollnum = emailParts; // Extracting "0328" from "f200328"
+            const Batch = "20"+emailParts[1] + emailParts[2]; // Extracting "20" from "f2
+            let UserData={
+                email_id: GooglePayload.email,
+                name: GooglePayload.name,
+                batch: Batch,
+                profilepicture: GooglePayload.picture,
+                subscribe: false,
+                rollnum: Rollnum,
+                usertype: 'user',
+            };
             const addedUser=await USER_MODEL.create(UserData);
             addedUser?console.log("User Added To USER_MODEL Database"):
             res.status(500).json({ error: "An error occurred" });

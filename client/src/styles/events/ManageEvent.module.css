@@ -1,0 +1,39 @@
+.eventOptions{
+    padding-top:8vh;
+    padding-left:20vw;
+    margin-top:0vh;
+    color:black;
+    height:100%;
+    background-color: #EBE3D5;
+    padding-bottom:3vh;
+}
+.EventTitle{
+    margin-left:3.5vw;
+    width:30vw;
+    height:10vh;
+    color:black;
+}
+.EventInputTextBox{
+    border-radius :1.9vw;
+    padding-top:0.7vw;
+    padding-bottom:0.7vw;
+    background-color: white;
+    color:black;
+    border-color: #776B5D;
+    border:3px solid #776B5D;
+}
+.searchButton{
+    height:7.4vh;
+    width:11vw;
+    border-radius: 2vw;
+    margin-left:2vw;
+    margin-top:0.4vh;
+    background-color: white;
+    color:black;
+    border-color: #776B5D;
+    border:3px solid #776B5D;
+}
+.searchButton:hover{
+    border-color: #776B5D;
+    background-color: #EBE3D5;
+}

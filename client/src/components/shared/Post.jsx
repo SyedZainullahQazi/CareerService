@@ -11,7 +11,7 @@ function Post(props) {
 
   return (
     <div className={`${PostCss.dark}`}>
-        <div className={`${PostCss.post_card}`}>
+        <div className={`${PostCss.post_card} row`}>
             <div>
                 <p className={`${PostCss.post_title}`}>{props.title}</p>
             </div>

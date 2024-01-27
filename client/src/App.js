@@ -18,6 +18,9 @@ import Scholarship from './pages/general/Scholarship';
 import ManageEvents from './pages/admin/events/ManageEvents';
 import CreateEvent from './pages/admin/events/CreateEvent';
 import EventOptions from './pages/admin/events/EventOptions';
+import UpdateEvent from './pages/admin/events/UpdateEvent';
+import TeamOptions from './pages/admin/team-management/TeamOptions';
+import ManageTeam from './pages/admin/team-management/ManageTeam';
 
 const App = () => {
   return (
@@ -34,9 +37,13 @@ const App = () => {
         <Route path="/scholarship" element={<GeneralProtectedRoute elementBody={<Scholarship/>}/>}/>
         <Route path="/henlo" element={<><h1>Hello World</h1></>} />
 
-        <Route path="/create-events" element={<AdminProtectedRoute elementBody={<ManageEvents/>}/>}/>
-        <Route path="/manage-events" element={<AdminProtectedRoute elementBody={<CreateEvent/>}/>}/>
+        <Route path="/create-event" element={<AdminProtectedRoute elementBody={<CreateEvent/>}/>}/>
+        <Route path="/manage-events" element={<AdminProtectedRoute elementBody={<ManageEvents/>}/>}/>
         <Route path="/event-options" element={<AdminProtectedRoute elementBody={<EventOptions />}/>}/>
+        <Route path="/update-event" element={<AdminProtectedRoute elementBody={<UpdateEvent />}/>}/>
+        <Route path="/member-management" element={<AdminProtectedRoute elementBody={<TeamOptions/>}/>}/>   
+        <Route path="/manage-team" element={<AdminProtectedRoute elementBody={<ManageTeam/>}/>}/>       
+    
       </Routes>
     </AuthProvider>
   );

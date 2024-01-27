@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import axios from 'axios';
 import Editor from '../Genral/Editor';
@@ -6,10 +6,13 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom';
 
+import { Backdrop } from '@mui/material';
+import { CircularProgress } from '@mui/material';
+
 
 import EvStyle from "../../styles/Forms/Event.module.css";
 import convertBase64 from '../../utils/convertBase64';
-import CreateEvent_API from '../../apis/admin/manage-blog/event/event_api';
+import { CreateEvent_API,UpdateEvent_API } from '../../apis/admin/manage-blog/event/event_api';
 import Cookies from 'js-cookie';
 let initialVal = {
     postTitle: '',
@@ -37,29 +40,65 @@ let validationScheme = {
     scheduledTime: Yup.string().required('Scheduled Time is required'),
 }
 
-function Event() {
+function Event(props) {
+    const navigate=useNavigate();
+    useEffect(()=>{
+        if(!props?.type){
+            if(!props?.postData){
+                navigate("/manage-events")
+            }
+        }
+    })
+    const updateVals = {
+        postTitle: props?.postData?.postTitle,
+        postDescription: props?.postData?.postDescription,
+        postType: props?.postData?.postType, // Added postType field
+        scheduleType: props?.postData?.scheduleType,
+        scheduledDate: props?.postData?.scheduledDate, // Added scheduledDate field
+        scheduledTime: props?.postData?.scheduledTime,
+        postDate: props?.postData?.postDate,
+        coverImage: props?.postData?.coverImage,
+        updateDate: '',
+    }
+    const [loading, setLoading] = useState(false);
+    const handleLoading = (update) => {
+        setLoading(update);
+    }
 
     const formik = useFormik({
-        initialValues: initialVal,
+        initialValues: props.type ? initialVal : updateVals,
         validationSchema: Yup.object(validationScheme),
         onSubmit: async (values) => {
             await onSubmitEvent(values);
         }
     });
 
-    const navigate = useNavigate();
-
     let onSubmitEvent = async (values) => {
-        formik.values.postDate = new Date();
+
+        if (props.type) {
+            formik.values.postDate = new Date()
+        }
+        else {
+            formik.values.updateDate = new Date();
+            formik.values.postDate = props.postData.postDate;
+        }
+
         const eventDateTime = new Date(`${values.scheduledDate} ${values.scheduledTime}`);
-        // Checking Event Date
+
         if (eventDateTime) {
-            const errors = {}; if (formik.values.postDate > eventDateTime) {
-                errors.scheduledDate = "Scheduled Date cannot Be Less Than Current Date";
+            const errors = {};
+            if (props.type) {
+                if (formik.values.postDate > eventDateTime) {
+                    errors.scheduledDate = "Scheduled Date cannot Be Less Than Current Date";
+                }
+            }
+            else{
+                if (formik.values.updateDate > eventDateTime) {
+                    errors.scheduledDate = "Scheduled Date cannot Be Less Than Current Date";
+                }
             }
             if (Object.keys(errors).length > 0) { formik.setErrors(errors); return; }
         }
-        // Checking Post Description
         if (!formik.values.postDescription || formik.values.postDescription === "<p><br></p>") {
             const errors = {};
             errors.postDescription = "post Desciption Cannot be Empty";
@@ -67,17 +106,22 @@ function Event() {
         }
         console.log(values);
         try {
-           const response= await CreateEvent_API(Cookies.get("jwtToken"),values);
-            console.log("Yayyyy Published");
-            setTimeout(()=>{
-                navigate("/dashboard");
-            },5000);
+            if(props.type){
+            setLoading(true);
+            const response = await CreateEvent_API(Cookies.get("jwtToken"), values);
+            setLoading(false);
+            }
+            else{
+                setLoading(true);
+                const response=await UpdateEvent_API(Cookies.get("jwtToken"),values,props?.postData?._id);
+                setLoading(false);
+            }
 
         } catch (error) {
             console.error('Error posting blog post:', error);
         }
     }
-    const handleCoverImage=async (event)=>{
+    const handleCoverImage = async (event) => {
         const base64 = await convertBase64(event.currentTarget.files[0]);
         formik.setFieldValue("coverImage", base64);
     }
@@ -108,23 +152,23 @@ function Event() {
                     </div> */}
                 </div>
                 <div>
-                        <input
-                            className={` ${EvStyle.EventImageInput} form-control `}
-                            type="file"
-                            id="coverImage"
-                            name="coverImage"
-                            onChange={handleCoverImage}
-                            onBlur={formik.handleBlur}
-                            accept=".png, .jpg, .jpeg .webp"
-                            placeholder='Upload Cover Image'
-                            required
-                        />
-                        {formik.touched.coverImage && formik.errors.coverImage ? (
-                            <p>{formik.errors.coverImage}</p>
-                        ) : (
-                            <div className="my-4"></div>
-                        )}
-                    </div>
+                    <input
+                        className={` ${EvStyle.EventImageInput} form-control `}
+                        type="file"
+                        id="coverImage"
+                        name="coverImage"
+                        onChange={handleCoverImage}
+                        onBlur={formik.handleBlur}
+                        accept=".png, .jpg, .jpeg .webp"
+                        placeholder='Upload Cover Image'
+                        required
+                    />
+                    {formik.touched.coverImage && formik.errors.coverImage ? (
+                        <p>{formik.errors.coverImage}</p>
+                    ) : (
+                        <br />
+                    )}
+                </div>
                 {/* Selecting the Type of The Post */}
                 <div className={`${EvStyle.EventInputDiv}`} >
                     <select
@@ -141,7 +185,7 @@ function Event() {
                     </select>
                     {formik.touched.postType && formik.errors.postType ? (
                         <div className="text-danger">{formik.errors.postType}</div>
-                    ) : <div className="my-4"></div>}
+                    ) : <br />}
                 </div>
 
                 {/* TIME OF SCHEDULE DATE/TIME*/}
@@ -153,7 +197,7 @@ function Event() {
                             type="date"
                             id="scheduledDate"
                             name="scheduledDate"
-                            value={formik.values.scheduledDate}
+                            value={formik.values.scheduledDate ? formik.values.scheduledDate.slice(0, 10) : ''}
                             onChange={formik.handleChange}
                             className={`form-control ${EvStyle.EventInputTextBox}`}
                             onBlur={formik.handleBlur}
@@ -193,17 +237,18 @@ function Event() {
                         value={formik.values.schduleType}
                         className={`form-control ${EvStyle.EventInputTextBox}`}
                     >
-                        <option value="" label="Select a type of Schedule" />
+                        <option value="" label={props.type ? `Select a type of Schedule` : props?.postData?.scheduleType} />
                         <option value="tentative" label="Tentative" />
                         <option value="fixed" label="Fixed" />
                     </select>
                     {formik.touched.scheduleType && formik.errors.scheduleType ? (
                         <div className="error">{formik.errors.scheduleType}</div>
-                    ) : <div className="my-4"></div>}
+                    ) : <br />}
                 </div>
                 {/* POST REACT QUILL */}
                 <div className={`${EvStyle.EventPost}`} style={{ color: "black", backgroundColor: "white", width: "50vw", height: "auto" }}>
-                    <Editor value={formik.values.postDescription} setValue={formik.setFieldValue} FormikValName={"postDescription"} readOnly={false} />
+                    <Editor value={formik.values.postDescription} setValue={formik.setFieldValue} FormikValName={"postDescription"}
+                        readOnly={false} updateHandler={handleLoading} Loading={loading} />
                     {formik.touched.postDescription && formik.errors.postDescription ? (
                         <div className="text-danger" >{formik.errors.postDescription}</div>
                     ) : <div className=""></div>}
@@ -212,8 +257,21 @@ function Event() {
                     <button type="submit" className={`btn btn-dark ${EvStyle.EventInputTextBox} ${EvStyle.EventDateTimeBoxRight}`}>Submit</button>
                 </div>
             </form>
+            {
+                loading ?
+                    <Backdrop
+                        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                        open={loading}
+                    >
+                        <CircularProgress color="inherit" />
+                    </Backdrop>
+                    :
+                    <div></div>
+            }
+
         </div>
     )
+
 }
 
 export default Event

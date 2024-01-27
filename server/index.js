@@ -8,6 +8,7 @@ const SIGNUP_ROUTE=require("./routes/Auth/signup");
 const GENERAL_ROUTE=require("./routes/Generals/generals")
 const ADMIN_MANAGEBLOG=require("./routes/Admin/manageBlog");
 const ADMIN_EVENT=require("./routes/Admin/event/event");
+const ADMIN_MANAGE_MEMBERS=require("./routes/Admin/manage-members/manageMembers");
 
 const app=express();    
 
@@ -19,6 +20,7 @@ app.use('/api/signup', SIGNUP_ROUTE);
 app.use('/api/generals',GENERAL_ROUTE);
 app.use('/api/admin/manage-blog',ADMIN_MANAGEBLOG);
 app.use('/api/admin/event',ADMIN_EVENT);
+app.use('/api/admin/manageTeam',ADMIN_MANAGE_MEMBERS);
 app.get("/", (req, res) => {
     const countryNames = ["United States", "Canada", "United Kingdom"];
     console.log("Hellow")

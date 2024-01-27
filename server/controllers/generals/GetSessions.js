@@ -1,9 +1,9 @@
 const EventModel = require("../../models/event_model");
 
-const GetEvents = async (req, res) => {
+const GetSessions = async (req, res) => {
   try {
 
-    const events = await EventModel.find({}).sort({ postDate: -1 }).populate({
+    const events = await EventModel.find({postType:"session"}).sort({ postDate: 1 }).populate({
         path: 'postedBy',
         model: 'User',
         select: 'rollnum name email profilepicture',
@@ -19,4 +19,4 @@ const GetEvents = async (req, res) => {
   }
 };
 
-module.exports = GetEvents;
+module.exports = GetSessions;

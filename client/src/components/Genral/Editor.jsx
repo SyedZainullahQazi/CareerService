@@ -6,7 +6,7 @@ import ReactQuill from "react-quill"
 import 'react-quill/dist/quill.snow.css'
 import SendBlogPostImage_API from "../../apis/admin/manage-blog/UploadBlogImage";
 
-const Editor = ({ value, setValue,FormikValName,readOnly,toolbar = true }) => {
+const Editor = ({ value, setValue,FormikValName,readOnly,updateHandler,Loading,toolbar = true }) => {
 
     const editorRef = useRef(null)
 
@@ -33,14 +33,14 @@ const Editor = ({ value, setValue,FormikValName,readOnly,toolbar = true }) => {
         input.onchange = async function() {
           const file = input.files[0];
           console.log('User trying to uplaod this:', file);
+          const loadingValue=Loading;
+          updateHandler(!loadingValue);
           const base64 = await convertBase64(file);
           const id = await SendBlogPostImage_API(Cookies.get("jwtToken"),base64); // I'm using react, so whatever upload function
-          console.log(id);
+          updateHandler(loadingValue);
           const quill = editorRef.current.getEditor();
           console.log(quill);
-
           const range = quill.getSelection();
-
           console.log(range);
           // this part the image is inserted
           // by 'image' option below, you just have to put src(link) of img here. 

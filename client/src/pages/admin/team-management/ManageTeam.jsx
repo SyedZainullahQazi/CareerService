@@ -1,25 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import ManageEventCss from '../../../styles/events/ManageEvent.module.css';
-import Body from '../../../components/Genral/Body';
 import { ToastContainer } from 'react-toastify';
 import EventCRUD from '../../../components/Genral/EventCRUD';
-import GETEVENT_API from '../../../apis/generals/GetAllEvent_API';
 import Cookies from 'js-cookie';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import TopBar from '../../../components/shared/TopBar';
 import LeftSideBar from '../../../components/shared/LeftSideBar';
-import { SearchEvent_API } from '../../../apis/admin/manage-blog/event/event_api';
+import { GetMember_API } from '../../../apis/admin/manage-members/members_api';
 
 let initialVal = {
-  searchTitle: '',
+  searchName: '',
 }
 let validationScheme = {
-  searchTitle: Yup.string().required('Title is required'),
+  searchName: Yup.string().required('Name is required'),
 }
 
-function ManageEvents() {
-  const [EventData, setEventData] = useState(null);
+function ManageTeam() {
+  const [UserData, setUserData] = useState(null);
   const [RefreshState, setRefreshState] = useState(false);
 
   const handleStateChange = (newState) => {
@@ -30,18 +28,21 @@ function ManageEvents() {
     initialValues: initialVal,
     validationSchema: Yup.object(validationScheme),
     onSubmit: async (values) => {
-      const MatchingEvent=await SearchEvent_API(Cookies.get("jwtToken"),values);
-      setEventData(MatchingEvent);
+      const MatchingUser=await GetMember_API(Cookies.get("jwtToken"));
+      setUserData(MatchingUser);
     }
   });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const Events = await GETEVENT_API(Cookies.get("jwtToken"));
-        setEventData(Events);
+        const MatchingUser=await GetMember_API(Cookies.get("jwtToken"));
+        console.log("----------------------------");
+        console.log(MatchingUser);  
+        console.log("----------------------------");
+        setUserData(MatchingUser);
       } catch (error) {
-        console.error("Error fetching Events:", error);
+        console.error("Error fetching Users:", error);
       }
     };
     fetchData();
@@ -66,16 +67,16 @@ function ManageEvents() {
                 <div className={`${ManageEventCss.EventTitle}`}>
                 <input
                   type="text"
-                  id="searchTitle"
-                  name="searchTitle"
+                  id="searchName"
+                  name="searchName"
                   onChange={formik.handleChange}
-                  value={formik.values.searchTitle}
+                  value={formik.values.searchName}
                   onBlur={formik.handleBlur}
                   className={`form-control ${ManageEventCss.EventInputTextBox}`}
-                  placeholder='POST TITLE'
+                  placeholder='Search By Name'
                 />
-                {formik.touched.searchTitle && formik.errors.searchTitle ? (
-                  <div className="text-danger">{formik.errors.searchTitle}</div>
+                {formik.touched.searchName && formik.errors.searchName ? (
+                  <div className="text-danger">{formik.errors.searchName}</div>
                 ) : <div className="my-4"></div>}
                 
                 </div>
@@ -85,12 +86,13 @@ function ManageEvents() {
           </div>
 
           <div>
-            {EventData &&
-              EventData.map((event) => (
+            {UserData &&
+              UserData.map((user) => (
                 <EventCRUD
-                  Event={event}
+                  User={user}
                   onUpdateState={handleStateChange}
                   currentRefreshState={RefreshState}
+                  Manageteam={true}
                 />
               ))}
           </div>
@@ -102,4 +104,4 @@ function ManageEvents() {
   )
 }
 
-export default ManageEvents
+export default ManageTeam;
